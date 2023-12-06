@@ -1,28 +1,46 @@
-﻿using BulkyWeb.Infrastructure.Data;
+﻿using BulkyWeb.Domain.Entities;
+using BulkyWeb.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BulkyWeb.Controllers
+namespace BulkyWeb.Controllers;
+
+public class VillaController : Controller
 {
-  public class VillaController : Controller
+  private readonly ApplicationDbContext _context;
+
+  public VillaController(ApplicationDbContext context)
   {
+    _context = context;
+  }
 
-    private readonly ApplicationDbContext _context;
+  public IActionResult Index()
+  {
+    var villas = _context.Villas.ToList();
+    return View(villas);
+  }
 
-    public VillaController(ApplicationDbContext context)
+  public IActionResult Create()
+  {
+    return View();
+  }
+
+  [HttpPost]
+  public IActionResult Create(Villa obj)
+  {
+    if (obj.Name == obj.Description)
     {
-      _context = context;
+      ModelState.AddModelError("name", "same");
     }
 
-    public IActionResult Index()
+
+    if (ModelState.IsValid)
     {
-      var villas = _context.Villas.ToList();
-      return View(villas);
+      _context.Villas.Add(obj);
+      _context.SaveChanges();
+
+      return RedirectToAction("Index", "Villa");
     }
 
-    public IActionResult Create()
-    {
-
-        return View();
-    }
+    return View();
   }
 }
