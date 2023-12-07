@@ -27,10 +27,7 @@ public class VillaController : Controller
   [HttpPost]
   public IActionResult Create(Villa obj)
   {
-    if (obj.Name == obj.Description)
-    {
-      ModelState.AddModelError("name", "same");
-    }
+    if (obj.Name == obj.Description) ModelState.AddModelError("name", "same");
 
 
     if (ModelState.IsValid)
@@ -38,21 +35,20 @@ public class VillaController : Controller
       _context.Villas.Add(obj);
       _context.SaveChanges();
 
+      TempData["success"] = "create success!";
+
       return RedirectToAction("Index", "Villa");
     }
-
+    TempData["error"] = "create failed!";
     return View();
   }
 
   public IActionResult Update(int villaId)
   {
-    Villa? obj = _context.Villas.FirstOrDefault(x => x.Id == villaId);
+    var obj = _context.Villas.FirstOrDefault(x => x.Id == villaId);
 
 
-    if (obj == null)
-    {
-      return RedirectToAction("Error", "Home");
-    }
+    if (obj == null) return RedirectToAction("Error", "Home");
 
     return View(obj);
   }
@@ -65,21 +61,21 @@ public class VillaController : Controller
       _context.Villas.Update(obj);
       _context.SaveChanges();
 
+      TempData["success"] = "update success!";
+
       return RedirectToAction("Index", "Villa");
     }
 
+    TempData["error"] = "update failed!";
     return View();
   }
 
   public IActionResult Delete(int villaId)
   {
-    Villa? obj = _context.Villas.FirstOrDefault(x => x.Id == villaId);
+    var obj = _context.Villas.FirstOrDefault(x => x.Id == villaId);
 
 
-    if (obj == null)
-    {
-      return RedirectToAction("Error", "Home");
-    }
+    if (obj == null) return RedirectToAction("Error", "Home");
 
     return View(obj);
   }
@@ -87,16 +83,19 @@ public class VillaController : Controller
   [HttpPost]
   public IActionResult Delete(Villa obj)
   {
-    Villa? objFromDB = _context.Villas.FirstOrDefault(x => x.Id == obj.Id);
+    var objFromDB = _context.Villas.FirstOrDefault(x => x.Id == obj.Id);
 
     if (objFromDB is not null)
     {
       _context.Villas.Remove(objFromDB);
       _context.SaveChanges();
 
+      TempData["success"] = "delete success!";
+
       return RedirectToAction("Index", "Villa");
     }
 
+    TempData["error"] = "delete failed!";
     return View();
   }
 }
