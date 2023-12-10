@@ -17,6 +17,7 @@ namespace BulkyWeb.Infrastructure.Data
 
     // automatically generate
     public DbSet<Villa> Villas { get; set; }
+    public DbSet<VillaNumber> VillaNumbers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,6 +32,16 @@ namespace BulkyWeb.Infrastructure.Data
         Occupancy = 2,
         Price = 200,
         Sqft = 500
+      });
+
+      modelBuilder.Entity<VillaNumber>().HasData(new VillaNumber
+      {
+        Villa_Number = 101,
+        VillaId = 7, 
+      }, new VillaNumber
+      {
+        Villa_Number = 202,
+        VillaId = 8,
       });
     }
   }
