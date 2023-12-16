@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BulkyWeb.Application.Common.Interfaces;
+using BulkyWeb.Infrastructure.Data;
+
+namespace BulkyWeb.Infrastructure.Repository
+{
+  public class UnitOfWork:IUnitOfWork
+  {
+    private readonly ApplicationDbContext _db;
+    public IVillaRepository Villa { get; }
+    public UnitOfWork(ApplicationDbContext db)
+    {
+      _db = db;
+      Villa = new VillaRepository(_db);
+    }
+  }
+}
