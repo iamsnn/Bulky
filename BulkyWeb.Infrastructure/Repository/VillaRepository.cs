@@ -40,10 +40,7 @@ namespace BulkyWeb.Infrastructure.Repository
     public Villa Get(Expression<Func<Villa, bool>> filter, string? includeProperties = null)
     {
       IQueryable<Villa> query = _db.Set<Villa>();
-      if (filter != null)
-      {
-        query = query.Where(filter);
-      }
+      query = query.Where(filter);
 
       if (!string.IsNullOrEmpty(includeProperties))
       {

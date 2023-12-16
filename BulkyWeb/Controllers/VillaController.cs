@@ -1,21 +1,21 @@
-﻿using BulkyWeb.Domain.Entities;
-using BulkyWeb.Infrastructure.Data;
+﻿using BulkyWeb.Application.Common.Interfaces;
+using BulkyWeb.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BulkyWeb.Controllers;
 
 public class VillaController : Controller
 {
-  private readonly ApplicationDbContext _context;
+  private readonly IVillaRepository _villaRepo;
 
-  public VillaController(ApplicationDbContext context)
+  public VillaController(IVillaRepository villaRepo)
   {
-    _context = context;
+    _villaRepo = villaRepo;
   }
 
   public IActionResult Index()
   {
-    var villas = _context.Villas.ToList();
+    var villas = _villaRepo.GetAll();
     return View(villas);
   }
 
@@ -32,8 +32,8 @@ public class VillaController : Controller
 
     if (ModelState.IsValid)
     {
-      _context.Villas.Add(obj);
-      _context.SaveChanges();
+      _villaRepo.Add(obj);
+      _villaRepo.Save();
 
       TempData["success"] = "create success!";
 
@@ -45,8 +45,7 @@ public class VillaController : Controller
 
   public IActionResult Update(int villaId)
   {
-    var obj = _context.Villas.FirstOrDefault(x => x.Id == villaId);
-
+    var obj = _villaRepo.Get(x => x.Id == villaId);
 
     if (obj == null) return RedirectToAction("Error", "Home");
 
@@ -58,8 +57,8 @@ public class VillaController : Controller
   {
     if (ModelState.IsValid && obj.Id > 0)
     {
-      _context.Villas.Update(obj);
-      _context.SaveChanges();
+      _villaRepo.Update(obj);
+      _villaRepo.Save();
 
       TempData["success"] = "update success!";
 
@@ -72,7 +71,7 @@ public class VillaController : Controller
 
   public IActionResult Delete(int villaId)
   {
-    var obj = _context.Villas.FirstOrDefault(x => x.Id == villaId);
+    var obj = _villaRepo.Get(x => x.Id == villaId);
 
 
     if (obj == null) return RedirectToAction("Error", "Home");
@@ -83,12 +82,12 @@ public class VillaController : Controller
   [HttpPost]
   public IActionResult Delete(Villa obj)
   {
-    var objFromDB = _context.Villas.FirstOrDefault(x => x.Id == obj.Id);
+    var objFromDB = _villaRepo.Get(x => x.Id == obj.Id);
 
     if (objFromDB is not null)
     {
-      _context.Villas.Remove(objFromDB);
-      _context.SaveChanges();
+      _villaRepo.Remove(objFromDB);
+      _villaRepo.Save();
 
       TempData["success"] = "delete success!";
 
