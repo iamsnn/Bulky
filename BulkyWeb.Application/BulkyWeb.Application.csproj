@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BulkyWeb.Domain\BulkyWeb.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

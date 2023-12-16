@@ -1,3 +1,4 @@
+using BulkyWeb.Application.Common.Interfaces;
 using BulkyWeb.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(option => 
   option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddScoped<IVillaRepository, IVillaRepository>();
 
 var app = builder.Build();
 
