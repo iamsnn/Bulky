@@ -8,7 +8,7 @@ namespace BulkyWeb.Infrastructure.Repository
   public class Repository<T> : IRepository<T> where T : class
   {
     private readonly ApplicationDbContext _db;
-    internal DbSet<T> dbSet;
+    private DbSet<T> dbSet;
 
     public Repository(ApplicationDbContext db) {
       _db = db;
@@ -60,6 +60,16 @@ namespace BulkyWeb.Infrastructure.Repository
     public void Remove(T entity)
     {
       dbSet.Remove(entity);
+    }
+
+    public bool Any(Expression<Func<T, bool>> filter)
+    {
+      return dbSet.Any(filter);
+    }
+
+    public void Save()
+    {
+      _db.SaveChanges();
     }
   }
 }

@@ -12,10 +12,12 @@ namespace BulkyWeb.Infrastructure.Repository
   {
     private readonly ApplicationDbContext _db;
     public IVillaRepository Villa { get; }
+    public IVillaNumberRepository VillaNumber { get; }
     public UnitOfWork(ApplicationDbContext db)
     {
       _db = db;
       Villa = new VillaRepository(_db);
+      VillaNumber = new VillaNumberRepository(_db);
     }
   }
 }

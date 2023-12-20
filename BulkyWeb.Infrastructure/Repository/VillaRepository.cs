@@ -19,12 +19,7 @@ namespace BulkyWeb.Infrastructure.Repository
 
     public void Update(Villa entity)
     {
-      _db.Update(entity);
-    }
-
-    public void Save()
-    {
-      _db.SaveChanges();
+      _db.Villas.Update(entity);
     }
   }
 }
