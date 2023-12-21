@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BulkyWeb.Application.Common.Interfaces;
+using BulkyWeb.Domain.Entities;
 using BulkyWeb.Infrastructure.Data;
 
 namespace BulkyWeb.Infrastructure.Repository
@@ -18,6 +19,11 @@ namespace BulkyWeb.Infrastructure.Repository
       _db = db;
       Villa = new VillaRepository(_db);
       VillaNumber = new VillaNumberRepository(_db);
+    }
+
+    public void Save()
+    {
+      _db.SaveChanges();
     }
   }
 }

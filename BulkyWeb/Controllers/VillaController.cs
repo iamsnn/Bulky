@@ -33,7 +33,7 @@ public class VillaController : Controller
     if (ModelState.IsValid)
     {
       _unitOfWork.Villa.Add(obj);
-      _unitOfWork.Villa.Save();
+      _unitOfWork.Save();
 
       TempData["success"] = "create success!";
 
@@ -58,7 +58,7 @@ public class VillaController : Controller
     if (ModelState.IsValid && obj.Id > 0)
     {
       _unitOfWork.Villa.Update(obj);
-      _unitOfWork.Villa.Save();
+      _unitOfWork.Save();
 
       TempData["success"] = "update success!";
 
@@ -87,7 +87,7 @@ public class VillaController : Controller
     if (objFromDB is not null)
     {
       _unitOfWork.Villa.Remove(objFromDB);
-      _unitOfWork.Villa.Save();
+      _unitOfWork.Save();
 
       TempData["success"] = "delete success!";
 

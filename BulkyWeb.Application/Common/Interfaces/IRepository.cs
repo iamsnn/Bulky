@@ -16,6 +16,5 @@ namespace BulkyWeb.Application.Common.Interfaces
     bool Any(Expression<Func<T, bool>> filter);
     // void Update(T entity);
     void Remove(T entity);
-    void Save();
   }
 }

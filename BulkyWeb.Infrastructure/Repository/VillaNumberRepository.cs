@@ -17,7 +17,7 @@ namespace BulkyWeb.Infrastructure.Repository
 
     public void Update(VillaNumber entity)
     {
-      _db.VillaNumbers.Update(entity);
-    }  
+      _db.Update(entity);
+    }
   }
 }
